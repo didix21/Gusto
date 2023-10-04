@@ -28,13 +28,7 @@ struct EditRestaurantView: View {
                     Text("\(index)")
                 }
             }
-        }
-//        .navigationTitle("Edit the Restaurant")
-//        .toolbar {
-//            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-//                Text("Save")
-//            })
-//        }
+        }.navigationTitle("Edit restaurant")
     }
 }
 
