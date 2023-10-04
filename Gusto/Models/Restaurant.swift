@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model class Restaurant {
-    var name: String
+    @Attribute(.unique) var name: String
     var priceRating: Int
     var qualityRating: Int
     var speedRating: Int
