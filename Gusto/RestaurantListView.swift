@@ -12,6 +12,10 @@ struct RestaurantListView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Restaurant.name) var restaurants: [Restaurant]
     
+    init(sortDescriptor: SortDescriptor<Restaurant>) {
+        _restaurants = Query(sort: [sortDescriptor])
+    }
+    
     var body: some View {
         List {
             ForEach(restaurants, id: \.self) { restaurant in
@@ -40,7 +44,7 @@ struct RestaurantListView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Restaurant.self,
     configurations: config)
-    let restaurants = [Restaurant]()
-    return RestaurantListView()
+    
+    return RestaurantListView(sortDescriptor: .init(\.qualityRating, order: .reverse))
         .modelContainer(container)
 }

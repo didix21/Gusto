@@ -45,7 +45,7 @@ struct ContentView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-            RestaurantListView()
+            RestaurantListView(sortDescriptor: sortDescriptor)
             .navigationDestination(for: Restaurant.self) { restaurant in
                 EditRestaurantView(restaurant: restaurant)
             }
