@@ -39,7 +39,7 @@ struct RestaurantView: View {
                     HStack {
                         if restaurant.qualityRating == 0 {
                             Image(systemName: "star.slash.fill")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.gray)
                         } else {
                             ForEach(1...restaurant.qualityRating, id: \.self) { _ in
                                 Image(systemName: "star.fill")
@@ -65,13 +65,7 @@ struct ContentView: View {
                         RestaurantView(restaurant)
                     }
                     .onDelete(perform: { indexSet in
-                        let candidates: [Restaurant] = indexSet.map { index in
-                            restaurants[index]
-                        }
-                        candidates.forEach { item in
-                            modelContext.delete(item)
-                        }
-                        
+                        deleteRestaurant(indexSet)
                     })
                 }
 
@@ -79,34 +73,48 @@ struct ContentView: View {
             .padding()
             .navigationTitle("GustoApp")
             .toolbar {
-                    Button(action: {
-                        let restaurants: [Restaurant] = [
-                            .init(name: "Wok this Way"),
-                            .init(name: "Thyme Square"),
-                            .init(name: "Pasta la Vista"),
-                            .init(name: "Life of Pie"),
-                            .init(name: "Lord of the Wings")
-                        ]
-                        for restaurant in restaurants {
-                            modelContext.insert(restaurant)
-                        }
-                        // Add your refresh action here
-                        // This closure will be called when the button is tapped
-                        print("Refresh button tapped")
-                    }) {
-                        Image(systemName: "wineglass")
-                    }
                 Button(action: {
-                    print("Delete")
-                    for restaurant in restaurants {
-                        modelContext.delete(restaurant)
-                    }
-                    
+                    addRestaurants()
+                }) {
+                    Image(systemName: "wineglass")
+                }
+                Button(action: {
+                    deleteAllRestaurants()
                 }, label: {
                     Image(systemName: "xmark.bin.fill")
                         .foregroundColor(.red)
                 })
             }
+        }
+    }
+    
+    private func addRestaurants() {
+        print("Adding restaurants")
+        let restaurants: [Restaurant] = [
+            .init(name: "Wok this Way"),
+            .init(name: "Thyme Square"),
+            .init(name: "Pasta la Vista"),
+            .init(name: "Life of Pie"),
+            .init(name: "Lord of the Wings")
+        ]
+        for restaurant in restaurants {
+            modelContext.insert(restaurant)
+        }
+    }
+    
+    private func deleteAllRestaurants() {
+        print("Deleting all restaurants")
+        for restaurant in restaurants {
+            modelContext.delete(restaurant)
+        }
+    }
+    
+    private func deleteRestaurant(_ indexSet: IndexSet) {
+        let candidates: [Restaurant] = indexSet.map { index in
+            restaurants[index]
+        }
+        candidates.forEach { item in
+            modelContext.delete(item)
         }
     }
 }
