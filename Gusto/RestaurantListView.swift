@@ -24,28 +24,7 @@ struct RestaurantListView: View {
             })
         }
     }
-    
-    private func addRestaurants() {
-        print("Adding restaurants")
-        let restaurants: [Restaurant] = [
-            .init(name: "Wok this Way"),
-            .init(name: "Thyme Square"),
-            .init(name: "Pasta la Vista"),
-            .init(name: "Life of Pie"),
-            .init(name: "Lord of the Wings")
-        ]
-        for restaurant in restaurants {
-            modelContext.insert(restaurant)
-        }
-    }
 
-    private func deleteAllRestaurants() {
-        print("Deleting all restaurants")
-        for restaurant in restaurants {
-            modelContext.delete(restaurant)
-        }
-    }
-    
     private func deleteRestaurant(_ indexSet: IndexSet) {
         let candidates: [Restaurant] = indexSet.map { index in
             restaurants[index]
@@ -61,6 +40,7 @@ struct RestaurantListView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Restaurant.self,
     configurations: config)
+    let restaurants = [Restaurant]()
     return RestaurantListView()
         .modelContainer(container)
 }

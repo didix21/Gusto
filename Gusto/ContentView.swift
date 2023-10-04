@@ -12,7 +12,6 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Restaurant.name) var restaurants: [Restaurant]
     @State private var path = [Restaurant]()
 
     var body: some View {
@@ -30,18 +29,13 @@ struct ContentView: View {
                     Image(systemName: "wineglass")
                 }
                 Button(action: {
-                    deleteAllRestaurants()
-                }, label: {
-                    Image(systemName: "xmark.bin.fill")
-                        .foregroundColor(.red)
-                })
-                Button(action: {
                     let restaurant: Restaurant = .init(name: "My new restaurant")
                     modelContext.insert(restaurant)
                     path.append(restaurant)
                 }, label: {
                     Image(systemName: "plus.circle.fill")
                 })
+                EditButton()
             }
         }
     }
@@ -57,13 +51,6 @@ struct ContentView: View {
         ]
         for restaurant in restaurants {
             modelContext.insert(restaurant)
-        }
-    }
-
-    private func deleteAllRestaurants() {
-        print("Deleting all restaurants")
-        for restaurant in restaurants {
-            modelContext.delete(restaurant)
         }
     }
 }
