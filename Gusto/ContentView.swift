@@ -15,10 +15,17 @@ enum SortOption {
     case price
 }
 
+enum FilterOption {
+    case name
+}
+
+
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var path = [Restaurant]()
     @State private var sortOption: SortOption = .name
+    @State private var filterOption: FilterOption = .name
+    @State private var searchTyped: String = ""
 
     private var sortDescriptor: SortDescriptor<Restaurant> {
         switch sortOption {
@@ -30,6 +37,16 @@ struct ContentView: View {
             return .init(\.speedRating, order: .reverse)
         case .price:
             return .init(\.priceRating, order: .reverse)
+        }
+    }
+    
+    private var predicateOption: Predicate<Restaurant> {
+        let search = searchTyped.lowercased()
+        switch filterOption {
+        case .name:
+            return #Predicate {
+                searchTyped.isEmpty ? true : $0.name.contains(search)
+            }
         }
     }
 
@@ -44,11 +61,11 @@ struct ContentView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-            RestaurantsView(sortDescriptor: sortDescriptor) {
-                $0.forEach { candidate in
-                    modelContext.delete(candidate)
-                }
+            RestaurantListView(sortDescriptor: sortDescriptor, predicate: predicateOption)
+            .navigationDestination(for: Restaurant.self) { restaurant in
+                EditRestaurantView(restaurant: restaurant)
             }
+            .searchable(text: $searchTyped)
             .navigationTitle("Restaurant list")
             .toolbar {
                 // Create a random restaurants
@@ -70,6 +87,7 @@ struct ContentView: View {
                 }, label: {
                     Image(systemName: "plus.circle.fill")
                 })
+                EditButton()
             }
         }
     }
@@ -86,48 +104,6 @@ struct ContentView: View {
         for restaurant in restaurants {
             modelContext.insert(restaurant)
         }
-    }
-
-//    private func deleteAllRestaurants() {
-//        print("Deleting all restaurants")
-//        for restaurant in restaurants {
-//            modelContext.delete(restaurant)
-//        }
-//    }
-
-
-}
-
-struct RestaurantsView: View {
-    @Query(sort: \Restaurant.name) var restaurants: [Restaurant]
-    var onDelete: ([Restaurant]) -> Void
-
-    init(sortDescriptor: SortDescriptor<Restaurant>, onDelete: @escaping ([Restaurant]) -> Void) {
-        _restaurants = Query(sort: [sortDescriptor])
-        self.onDelete = onDelete
-    }
-
-    var body: some View {
-        List {
-            ForEach(restaurants, id: \.self) { restaurant in
-                NavigationLink(value: restaurant) {
-                    RestaurantView(restaurant)
-                }
-            }
-            .onDelete(perform: { indexSet in
-                deleteRestaurant(indexSet)
-            })
-        }
-        .navigationDestination(for: Restaurant.self) { restaurant in
-            EditRestaurantView(restaurant: restaurant)
-        }
-    }
-
-    private func deleteRestaurant(_ indexSet: IndexSet) {
-        let candidates: [Restaurant] = indexSet.map { index in
-            _restaurants.wrappedValue[index]
-        }
-        onDelete(candidates)
     }
 }
 

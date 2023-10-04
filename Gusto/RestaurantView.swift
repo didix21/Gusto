@@ -10,6 +10,7 @@ import SwiftData
 
 struct RestaurantView: View {
     var restaurant: Restaurant
+    
 
     init(_ restaurant: Restaurant) {
         self.restaurant = restaurant
