@@ -8,17 +8,20 @@
 import Foundation
 import SwiftData
 
-@Model // Must be a class
-class Restaurant {
-    let name: String
-    let priceRating: Int
-    let qualityRating: Int
-    let speedRating: Int
+@Model class Restaurant {
+    var name: String
+//    var priceRating: Int
+//    var qualityRating: Int
+//    var speedRating: Int
     
-    init(name: String, priceRating: Int, qualityRating: Int, speedRating: Int) {
+//    init(name: String, priceRating: Int , qualityRating: Int = 0, speedRating: Int = 0) {
+//        self.name = name
+//        self.priceRating = priceRating
+//        self.qualityRating = qualityRating
+//        self.speedRating = speedRating
+//    }
+    
+    init(name: String) {
         self.name = name
-        self.priceRating = priceRating
-        self.qualityRating = qualityRating
-        self.speedRating = speedRating
     }
 }
