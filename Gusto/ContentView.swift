@@ -59,7 +59,6 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Restaurants")
                 List {
                     ForEach(restaurants, id: \.self) { restaurant in
                         NavigationLink {
@@ -75,7 +74,7 @@ struct ContentView: View {
 
             }
             .padding()
-            .navigationTitle("GustoApp")
+            .navigationTitle("Restaurant list")
             .toolbar {
                 // Create a random restaurants
                 Button(action: {
@@ -89,6 +88,17 @@ struct ContentView: View {
                     Image(systemName: "xmark.bin.fill")
                         .foregroundColor(.red)
                 })
+                NavigationLink {
+                    {
+                        
+                        return EditRestaurantView(restaurant: restaurants.last!)
+                    }
+                } label: {
+                  Image(systemName: "plus.circle.fill")
+                } onTapGesture: {
+                    let restaurant: Restaurant = .init(name: "My new restaurant")
+                    modelContext.insert(restaurant)
+                }
             }
         }
     }
