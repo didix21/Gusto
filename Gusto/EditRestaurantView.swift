@@ -45,5 +45,5 @@ struct EditRestaurantView: View {
     let example = Restaurant(name: "The Restaurant Example")
     
     return EditRestaurantView(restaurant: example)
-        .modelContainer(for: Restaurant.self)
+        .modelContainer(container)
 }
