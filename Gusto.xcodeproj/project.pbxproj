@@ -12,6 +12,7 @@
 		5D29837D2ACD5D61003FF02F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D29837C2ACD5D61003FF02F /* Assets.xcassets */; };
 		5D2983802ACD5D61003FF02F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D29837F2ACD5D61003FF02F /* Preview Assets.xcassets */; };
 		5DB58C392ACD677A00D99D27 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB58C382ACD677A00D99D27 /* Restaurant.swift */; };
+		5DB58C3B2ACD978600D99D27 /* EditRestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB58C3A2ACD978600D99D27 /* EditRestaurantView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		5D29837C2ACD5D61003FF02F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D29837F2ACD5D61003FF02F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5DB58C382ACD677A00D99D27 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		5DB58C3A2ACD978600D99D27 /* EditRestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRestaurantView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 				5D29837A2ACD5D5D003FF02F /* ContentView.swift */,
 				5D29837C2ACD5D61003FF02F /* Assets.xcassets */,
 				5D29837E2ACD5D61003FF02F /* Preview Content */,
+				5DB58C3A2ACD978600D99D27 /* EditRestaurantView.swift */,
 			);
 			path = Gusto;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D29837B2ACD5D5D003FF02F /* ContentView.swift in Sources */,
+				5DB58C3B2ACD978600D99D27 /* EditRestaurantView.swift in Sources */,
 				5D2983792ACD5D5D003FF02F /* GustoApp.swift in Sources */,
 				5DB58C392ACD677A00D99D27 /* Restaurant.swift in Sources */,
 			);

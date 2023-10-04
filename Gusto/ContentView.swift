@@ -73,6 +73,7 @@ struct ContentView: View {
             .padding()
             .navigationTitle("GustoApp")
             .toolbar {
+                // Create a random restaurants
                 Button(action: {
                     addRestaurants()
                 }) {
