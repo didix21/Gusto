@@ -10,18 +10,23 @@ import SwiftData
 
 @Model class Restaurant {
     var name: String
-//    var priceRating: Int
-//    var qualityRating: Int
-//    var speedRating: Int
+    var priceRating: Int
+    var qualityRating: Int
+    var speedRating: Int
     
-//    init(name: String, priceRating: Int , qualityRating: Int = 0, speedRating: Int = 0) {
-//        self.name = name
-//        self.priceRating = priceRating
-//        self.qualityRating = qualityRating
-//        self.speedRating = speedRating
-//    }
-    
-    init(name: String) {
+    init(name: String, priceRating: Int, qualityRating: Int, speedRating: Int) {
         self.name = name
+        self.priceRating = priceRating
+        self.qualityRating = qualityRating
+        self.speedRating = speedRating
+    }
+    
+    convenience init(name: String) {
+        self.init(
+            name: name,
+            priceRating: .random(in: 0...5),
+            qualityRating:.random(in: 0...5),
+            speedRating: .random(in: 0...5)
+        )
     }
 }
