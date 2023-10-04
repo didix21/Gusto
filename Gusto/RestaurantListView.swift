@@ -12,8 +12,13 @@ struct RestaurantListView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Restaurant.name) var restaurants: [Restaurant]
     
-    init(sortDescriptor: SortDescriptor<Restaurant>) {
-        _restaurants = Query(sort: [sortDescriptor])
+    init(sortDescriptor: SortDescriptor<Restaurant>, predicate: Predicate<Restaurant>? = nil) {
+        guard let predicate = predicate else {
+            _restaurants = Query(sort: [sortDescriptor])
+            return
+        }
+        
+        _restaurants = Query(filter: predicate, sort: [sortDescriptor] ,animation: .bouncy)
     }
     
     var body: some View {

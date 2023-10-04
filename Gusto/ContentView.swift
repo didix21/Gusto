@@ -15,11 +15,17 @@ enum SortOption {
     case price
 }
 
+enum FilterOption {
+    case name
+}
+
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var path = [Restaurant]()
     @State private var sortOption: SortOption = .name
+    @State private var filterOption: FilterOption = .name
+    @State private var searchTyped: String = ""
 
     private var sortDescriptor: SortDescriptor<Restaurant> {
         switch sortOption {
@@ -31,6 +37,16 @@ struct ContentView: View {
             return .init(\.speedRating, order: .reverse)
         case .price:
             return .init(\.priceRating, order: .reverse)
+        }
+    }
+    
+    private var predicateOption: Predicate<Restaurant> {
+        let search = searchTyped.lowercased()
+        switch filterOption {
+        case .name:
+            return #Predicate {
+                searchTyped.isEmpty ? true : $0.name.contains(search)
+            }
         }
     }
 
@@ -45,10 +61,11 @@ struct ContentView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-            RestaurantListView(sortDescriptor: sortDescriptor)
+            RestaurantListView(sortDescriptor: sortDescriptor, predicate: predicateOption)
             .navigationDestination(for: Restaurant.self) { restaurant in
                 EditRestaurantView(restaurant: restaurant)
             }
+            .searchable(text: $searchTyped)
             .navigationTitle("Restaurant list")
             .toolbar {
                 // Create a random restaurants
