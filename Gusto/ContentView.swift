@@ -62,7 +62,11 @@ struct ContentView: View {
                 Text("Restaurants")
                 List {
                     ForEach(restaurants, id: \.self) { restaurant in
-                        RestaurantView(restaurant)
+                        NavigationLink {
+                            EditRestaurantView(restaurant: restaurant)
+                        } label: {
+                            RestaurantView(restaurant)
+                        }
                     }
                     .onDelete(perform: { indexSet in
                         deleteRestaurant(indexSet)
