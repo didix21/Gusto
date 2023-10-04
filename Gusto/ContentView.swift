@@ -60,8 +60,19 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 Text("Restaurants")
-                List(restaurants) { restaurant in
-                   RestaurantView(restaurant)
+                List {
+                    ForEach(restaurants, id: \.self) { restaurant in
+                        RestaurantView(restaurant)
+                    }
+                    .onDelete(perform: { indexSet in
+                        let candidates: [Restaurant] = indexSet.map { index in
+                            restaurants[index]
+                        }
+                        candidates.forEach { item in
+                            modelContext.delete(item)
+                        }
+                        
+                    })
                 }
 
             }
