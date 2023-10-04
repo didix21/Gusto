@@ -14,6 +14,10 @@ import SwiftData
     var qualityRating: Int
     var speedRating: Int
     
+    var overallRating: Double {
+        Double(priceRating + qualityRating + speedRating) / 3
+    }
+    
     init(name: String, priceRating: Int, qualityRating: Int, speedRating: Int) {
         self.name = name
         self.priceRating = priceRating

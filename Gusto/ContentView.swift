@@ -17,33 +17,37 @@ struct RestaurantView: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "fork.knife.circle.fill")
-                .foregroundColor(.orange)
-            Text(restaurant.name)
-                .padding()
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "dollarsign.circle.fill")
-                        .foregroundColor(.green)
-                    Text("\(restaurant.priceRating)")
-                }
-                HStack {
-                    Image(systemName: "speedometer")
-                        .foregroundColor(.cyan)
-                    Text("\(restaurant.speedRating)")
-                }
-                HStack {
-                    if restaurant.qualityRating == 0 {
-                        Image(systemName: "star.slash.fill")
-                            .foregroundColor(.yellow)
-                    } else {
-                        ForEach(1...restaurant.qualityRating, id: \.self) { _ in
-                            Image(systemName: "star.fill")
+            Text("\(restaurant.overallRating, specifier: "%.1f")")
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "fork.knife.circle.fill")
+                            .foregroundColor(.orange)
+                        Text(restaurant.name)
+                            .padding(.trailing)
+                    }
+                    HStack {
+                        Image(systemName: "dollarsign.circle.fill")
+                            .foregroundColor(.green)
+                        Text("\(restaurant.priceRating)")
+                            .padding(.trailing)
+                    }
+                    HStack {
+                        Image(systemName: "speedometer")
+                            .foregroundColor(.cyan)
+                        Text("\(restaurant.speedRating)")
+                    }
+                    HStack {
+                        if restaurant.qualityRating == 0 {
+                            Image(systemName: "star.slash.fill")
                                 .foregroundColor(.yellow)
+                        } else {
+                            ForEach(1...restaurant.qualityRating, id: \.self) { _ in
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.yellow)
+                            }
                         }
                     }
                 }
-            }
         }
     }
 }
