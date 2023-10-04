@@ -15,6 +15,7 @@
 		5DB58C3B2ACD978600D99D27 /* EditRestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB58C3A2ACD978600D99D27 /* EditRestaurantView.swift */; };
 		5DB58C3D2ACDA6C000D99D27 /* RestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB58C3C2ACDA6C000D99D27 /* RestaurantView.swift */; };
 		5DB58C3F2ACDA7A100D99D27 /* RestaurantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB58C3E2ACDA7A100D99D27 /* RestaurantListView.swift */; };
+		5DB58C412ACDBF9C00D99D27 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB58C402ACDBF9C00D99D27 /* Dish.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		5DB58C3A2ACD978600D99D27 /* EditRestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRestaurantView.swift; sourceTree = "<group>"; };
 		5DB58C3C2ACDA6C000D99D27 /* RestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantView.swift; sourceTree = "<group>"; };
 		5DB58C3E2ACDA7A100D99D27 /* RestaurantListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListView.swift; sourceTree = "<group>"; };
+		5DB58C402ACDBF9C00D99D27 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				5DB58C382ACD677A00D99D27 /* Restaurant.swift */,
+				5DB58C402ACDBF9C00D99D27 /* Dish.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				5D29837B2ACD5D5D003FF02F /* ContentView.swift in Sources */,
 				5DB58C3B2ACD978600D99D27 /* EditRestaurantView.swift in Sources */,
+				5DB58C412ACDBF9C00D99D27 /* Dish.swift in Sources */,
 				5D2983792ACD5D5D003FF02F /* GustoApp.swift in Sources */,
 				5DB58C3F2ACDA7A100D99D27 /* RestaurantListView.swift in Sources */,
 				5DB58C3D2ACDA6C000D99D27 /* RestaurantView.swift in Sources */,
