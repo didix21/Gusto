@@ -17,16 +17,7 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            List {
-                ForEach(restaurants, id: \.self) { restaurant in
-                    NavigationLink(value: restaurant) {
-                        RestaurantView(restaurant)
-                    }
-                }
-                .onDelete(perform: { indexSet in
-                    deleteRestaurant(indexSet)
-                })
-            }
+            RestaurantListView()
             .navigationDestination(for: Restaurant.self) { restaurant in
                 EditRestaurantView(restaurant: restaurant)
             }
@@ -73,15 +64,6 @@ struct ContentView: View {
         print("Deleting all restaurants")
         for restaurant in restaurants {
             modelContext.delete(restaurant)
-        }
-    }
-
-    private func deleteRestaurant(_ indexSet: IndexSet) {
-        let candidates: [Restaurant] = indexSet.map { index in
-            restaurants[index]
-        }
-        candidates.forEach { item in
-            modelContext.delete(item)
         }
     }
 }
