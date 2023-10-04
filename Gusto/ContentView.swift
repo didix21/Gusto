@@ -8,27 +8,46 @@
 import SwiftUI
 import SwiftData
 
-
+enum SortOption {
+    case name
+    case quality
+    case speed
+    case price
+}
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Restaurant.name) var restaurants: [Restaurant]
     @State private var path = [Restaurant]()
+    @State private var sortOption: SortOption = .name
+
+    private var sortDescriptor: SortDescriptor<Restaurant> {
+        switch sortOption {
+        case .name:
+            return .init(\.name)
+        case .quality:
+            return .init(\.qualityRating, order: .reverse)
+        case .speed:
+            return .init(\.speedRating, order: .reverse)
+        case .price:
+            return .init(\.priceRating, order: .reverse)
+        }
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
-            List {
-                ForEach(restaurants, id: \.self) { restaurant in
-                    NavigationLink(value: restaurant) {
-                        RestaurantView(restaurant)
-                    }
+            VStack {
+                Picker("Sort By", selection: $sortOption) {
+                    Text("Name").tag(SortOption.name)
+                    Text("Price").tag(SortOption.price)
+                    Text("Quality").tag(SortOption.quality)
+                    Text("Speed").tag(SortOption.speed)
                 }
-                .onDelete(perform: { indexSet in
-                    deleteRestaurant(indexSet)
-                })
+                .pickerStyle(SegmentedPickerStyle())
             }
-            .navigationDestination(for: Restaurant.self) { restaurant in
-                EditRestaurantView(restaurant: restaurant)
+            RestaurantsView(sortDescriptor: sortDescriptor) {
+                $0.forEach { candidate in
+                    modelContext.delete(candidate)
+                }
             }
             .navigationTitle("Restaurant list")
             .toolbar {
@@ -38,12 +57,12 @@ struct ContentView: View {
                 }) {
                     Image(systemName: "wineglass")
                 }
-                Button(action: {
-                    deleteAllRestaurants()
-                }, label: {
-                    Image(systemName: "xmark.bin.fill")
-                        .foregroundColor(.red)
-                })
+//                Button(action: {
+//                    deleteAllRestaurants()
+//                }, label: {
+//                    Image(systemName: "xmark.bin.fill")
+//                        .foregroundColor(.red)
+//                })
                 Button(action: {
                     let restaurant: Restaurant = .init(name: "My new restaurant")
                     modelContext.insert(restaurant)
@@ -69,20 +88,46 @@ struct ContentView: View {
         }
     }
 
-    private func deleteAllRestaurants() {
-        print("Deleting all restaurants")
-        for restaurant in restaurants {
-            modelContext.delete(restaurant)
+//    private func deleteAllRestaurants() {
+//        print("Deleting all restaurants")
+//        for restaurant in restaurants {
+//            modelContext.delete(restaurant)
+//        }
+//    }
+
+
+}
+
+struct RestaurantsView: View {
+    @Query(sort: \Restaurant.name) var restaurants: [Restaurant]
+    var onDelete: ([Restaurant]) -> Void
+
+    init(sortDescriptor: SortDescriptor<Restaurant>, onDelete: @escaping ([Restaurant]) -> Void) {
+        _restaurants = Query(sort: [sortDescriptor])
+        self.onDelete = onDelete
+    }
+
+    var body: some View {
+        List {
+            ForEach(_restaurants.wrappedValue, id: \.self) { restaurant in
+                NavigationLink(value: restaurant) {
+                    RestaurantView(restaurant)
+                }
+            }
+            .onDelete(perform: { indexSet in
+                deleteRestaurant(indexSet)
+            })
+        }
+        .navigationDestination(for: Restaurant.self) { restaurant in
+            EditRestaurantView(restaurant: restaurant)
         }
     }
 
     private func deleteRestaurant(_ indexSet: IndexSet) {
         let candidates: [Restaurant] = indexSet.map { index in
-            restaurants[index]
+            _restaurants.wrappedValue[index]
         }
-        candidates.forEach { item in
-            modelContext.delete(item)
-        }
+        onDelete(candidates)
     }
 }
 
