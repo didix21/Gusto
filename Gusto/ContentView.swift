@@ -109,7 +109,7 @@ struct RestaurantsView: View {
 
     var body: some View {
         List {
-            ForEach(_restaurants.wrappedValue, id: \.self) { restaurant in
+            ForEach(restaurants, id: \.self) { restaurant in
                 NavigationLink(value: restaurant) {
                     RestaurantView(restaurant)
                 }
